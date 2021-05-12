@@ -1,10 +1,16 @@
-﻿using System;
+﻿using Commom.Entities;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Domain.Entities
 {
-    class User
+    public class User : Entity
     {
+        public string Name { get; private set; }
+        public ICollection<Form> Forms { get; private set; }
+
+        public User(string name)
+        {
+            Name = name;
+        }
     }
 }
