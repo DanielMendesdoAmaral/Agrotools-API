@@ -1,19 +1,28 @@
 ﻿using Commom.Entities;
-using System;
 
 namespace Domain.Entities
 {
     public class Answer : Entity
     {
         public string Text { get; private set; }
-        public Guid QuestionId { get; private set; }
-        public Question Question { get; private set; }
-        public Guid UserId { get; private set; }
-        public User User { get; private set; }
+        public string QuestionId { get; private set; }
+        public string AuthorId { get; private set; }
+        public decimal Latitude { get; private set; }
+        public decimal Longitude { get; private set; }
 
-        public Answer(string text)
+        public Answer(
+            string text,
+            string questionId,
+            string authorId,
+            decimal latitude,
+            decimal longitude
+        )
         {
-            Text = text;
+            Text = text.Trim();
+            QuestionId = questionId.Trim();
+            AuthorId = authorId.Trim();
+            Latitude = latitude;
+            Longitude = longitude;
         }
     }
 }

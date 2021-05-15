@@ -1,6 +1,6 @@
 ﻿namespace Infrastructure.Data.Contexts
 {
-    public class DataContext : IDataContext
+    public interface IDataContext
     {
         public string AuthorCollectionName { get; set; }
         public string FormCollectionName { get; set; }

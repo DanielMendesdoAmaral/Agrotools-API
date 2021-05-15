@@ -10,7 +10,7 @@ namespace API.Controllers
     [ApiController]
     public class BaseController : ControllerBase
     {
-        private readonly IMediator _mediator;
+        protected readonly IMediator _mediator;
 
         public BaseController([FromServices] IMediator mediator)
         {
@@ -33,7 +33,7 @@ namespace API.Controllers
                     400 => BadRequest(result),
                     401 => Unauthorized(result),
                     404 => NotFound(result),
-                    _ => null
+                    500 => StatusCode(500, result)
                 };
             }
             catch(Exception ex)
@@ -55,8 +55,10 @@ namespace API.Controllers
                 return result.StatusCode switch
                 {
                     200 => Ok(result),
+                    400 => BadRequest(result),
                     401 => Unauthorized(result),
-                    404 => NotFound(result)
+                    404 => NotFound(result),
+                    500 => StatusCode(500, result)
                 };
             }
             catch (Exception ex)

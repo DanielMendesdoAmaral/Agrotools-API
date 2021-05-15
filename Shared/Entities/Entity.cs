@@ -1,15 +1,19 @@
-﻿using System;
+﻿using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
+using System;
 
 namespace Commom.Entities
 {
     public abstract class Entity
     {
-        public Guid Id { get; private set; }
+        [BsonId]
+        [BsonRepresentation(BsonType.ObjectId)]
+        public string Id { get; private set; }
         public DateTime CreatedAt { get; private set; }
 
         public Entity()
         {
-            Id = Guid.NewGuid();
+            Id = ObjectId.GenerateNewId().ToString();
             CreatedAt = DateTime.Now;
         }
     }
