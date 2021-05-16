@@ -30,6 +30,7 @@ namespace Domain.Handlers.Queries.FormHandlers
                 var result = new
                 {
                     FormTitle = form.Title,
+                    FormId = form.Id,
                     Questions = questions.Select(
                         q => new GetQuestionsFormResponse()
                         {
@@ -37,6 +38,7 @@ namespace Domain.Handlers.Queries.FormHandlers
                             Text = q.Text
                         }
                     )
+                    .OrderBy(q => q.Text)
                 };
 
                 return Task.FromResult(new GenericQueryResult(200, null, result));

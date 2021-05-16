@@ -4,6 +4,7 @@ using Domain.Queries.Responses.FormRequests;
 using Domain.Repositories;
 using MediatR;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -44,16 +45,21 @@ namespace Domain.Handlers.Queries.FormHandlers
 
                 foreach(var question in questions)
                 {
-                    var answer = _answerRepository.Get(question.Id);
+                    var answers = _answerRepository.Get(question.Id);
 
                     questionsAndAnswers.Add(new GetAnswersFormResponse()
                     {
                         QuestionText = question.Text,
-                        AnswerText = answer.Text,
-                        AnsweredAt = answer.CreatedAt.ToString("dd/MM/yyyy"),
-                        Latitude = answer.Latitude,
-                        Longitude = answer.Longitude,
-                        AuthorName = _authorRepository.Get(answer.AuthorId).Name
+                        Answers = answers.Select(
+                            a => new AnswerResponse()
+                            {
+                                AnswerText = a.Text,
+                                AnsweredAt = a.CreatedAt.ToString("dd/MM/yyyy"),
+                                Latitude = a.Latitude,
+                                Longitude = a.Longitude,
+                                AuthorName = _authorRepository.Get(a.AuthorId).Name
+                            }
+                        ).OrderBy(a => a.AnsweredAt).ToList()
                     });
                 }
 
@@ -61,7 +67,7 @@ namespace Domain.Handlers.Queries.FormHandlers
                 {
                     FormTitle = form.Title,
                     AuthorName = _authorRepository.Get(form.AuthorId).Name,
-                    QuestionsAndAnswers = questionsAndAnswers
+                    QuestionsAndAnswers = questionsAndAnswers.OrderBy(qa => qa.QuestionText)
                 };
 
                 return Task.FromResult(new GenericQueryResult(200, null, result));

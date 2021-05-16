@@ -3,6 +3,7 @@ using Domain.Repositories;
 using Infrastructure.Data.Contexts;
 using MongoDB.Driver;
 using System;
+using System.Collections.Generic;
 
 namespace Infrastructure.Data.Repositories
 {
@@ -29,11 +30,11 @@ namespace Infrastructure.Data.Repositories
             }
         }
 
-        public Answer Get(string questionId)
+        public ICollection<Answer> Get(string questionId)
         {
             try
             {
-                return _answers.AsQueryable().ToList().Find(a => a.QuestionId == questionId);
+                return _answers.AsQueryable().ToList().FindAll(a => a.QuestionId == questionId);
             }
             catch (Exception ex)
             {

@@ -92,7 +92,7 @@ namespace UI
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
 
             app.UseSwagger();
 
@@ -101,7 +101,7 @@ namespace UI
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Agrotools Forms API V1");
             });
 
-            app.UseCors("CustomPermission");
+            app.UseCors(c => c.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 
             app.UseRouting();
 

@@ -44,7 +44,7 @@ namespace Domain.Handlers.Queries.FormHandlers
                     }
                 );
 
-                return Task.FromResult(new GenericQueryResult(200, null, result));
+                return Task.FromResult(new GenericQueryResult(200, null, result.OrderBy(f => f.FormTitle)));
             }
             catch 
             {

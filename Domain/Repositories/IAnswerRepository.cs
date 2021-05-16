@@ -1,10 +1,11 @@
 ﻿using Domain.Entities;
+using System.Collections.Generic;
 
 namespace Domain.Repositories
 {
     public interface IAnswerRepository
     {
         void Create(Answer answer);
-        Answer Get(string questionId);
+        ICollection<Answer> Get(string questionId);
     }
 }
